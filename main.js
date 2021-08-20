@@ -4,19 +4,23 @@ const thumbBar = document.querySelector('.thumb-bar');
 const btn = document.querySelector('button');
 const overlay = document.querySelector('.overlay');
 
-/* Looping through images */
+// Looping through images and add to thumb bar div element
+let newImages = [];
 for (let i = 1; i < 6; i++) {
-    const newImage = document.createElement("img");
-    newImage.setAttribute("src", `images/pic${i}.jpg`);
-    thumbBar.appendChild(newImage);
-    
-    // Adding mouse click behavior to each thumbnail
-    newImage.addEventListener("click", function () {
-        displayedImage.setAttribute("src", `images/pic${i}.jpg`);
-    });
+    newImages += `<img src='images/pic${i}.jpg'>`;
 }
+thumbBar.innerHTML = newImages;
 
-/* Wiring up the Darken/Lighten button */
+// Adding mouse click behavior to each thumbnail image
+const thumbImages = thumbBar.querySelectorAll('img');
+thumbImages.forEach(image => {
+    image.addEventListener('click', () => {
+        const newImageSrc = image.getAttribute("src");
+        displayedImage.setAttribute("src", newImageSrc);
+    });
+});
+
+// Wiring up the darken and lighten button
 btn.addEventListener('click', () => {
     if (btn.getAttribute('class') !== '') {
         btn.textContent = 'Lighten';
